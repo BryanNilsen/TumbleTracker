@@ -1,0 +1,13 @@
+﻿
+.bg-dark {
+    background-color: steelblue !important;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.nav-icon > img {
+    height: 2.5rem;
+    margin-right: .5rem;
+}
