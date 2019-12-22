@@ -1,0 +1,74 @@
+﻿@model TumbleTracker.Models.MeetGymnast
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>MeetGymnast</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MeetGymnastId" />
+            <div class="form-group">
+                <label asp-for="Group" class="control-label"></label>
+                <input asp-for="Group" class="form-control" />
+                <span asp-validation-for="Group" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScoreBars" class="control-label"></label>
+                <input asp-for="ScoreBars" class="form-control" />
+                <span asp-validation-for="ScoreBars" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScoreBeam" class="control-label"></label>
+                <input asp-for="ScoreBeam" class="form-control" />
+                <span asp-validation-for="ScoreBeam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScoreFloor" class="control-label"></label>
+                <input asp-for="ScoreFloor" class="form-control" />
+                <span asp-validation-for="ScoreFloor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScoreVault" class="control-label"></label>
+                <input asp-for="ScoreVault" class="form-control" />
+                <span asp-validation-for="ScoreVault" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Place" class="control-label"></label>
+                <input asp-for="Place" class="form-control" />
+                <span asp-validation-for="Place" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GymnastId" class="control-label"></label>
+                <select asp-for="GymnastId" class="form-control" asp-items="ViewBag.GymnastId"></select>
+                <span asp-validation-for="GymnastId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MeetId" class="control-label"></label>
+                <select asp-for="MeetId" class="form-control" asp-items="ViewBag.MeetId"></select>
+                <span asp-validation-for="MeetId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,19 +12,25 @@ using TumbleTracker.Models;
 
 namespace TumbleTracker.Controllers
 {
+    [Authorize]
     public class MeetsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public MeetsController(ApplicationDbContext context)
+        public MeetsController(ApplicationDbContext ctx,
+                          UserManager<ApplicationUser> userManager)
         {
-            _context = context;
+            _userManager = userManager;
+            _context = ctx;
         }
 
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         // GET: Meets
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Meets.Include(m => m.User);
+            var user = await GetCurrentUserAsync();
+            var applicationDbContext = _context.Meets.Include(g => g.User).Where(g => g.UserId == user.Id);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -48,7 +56,6 @@ namespace TumbleTracker.Controllers
         // GET: Meets/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
             return View();
         }
 
@@ -59,13 +66,17 @@ namespace TumbleTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MeetId,Date,EventName,HostGym,Address,City,State,Zip,UserId")] Meet meet)
         {
+            ModelState.Remove("User");
+            ModelState.Remove("UserId");
             if (ModelState.IsValid)
             {
+                var user = await GetCurrentUserAsync();
+                meet.UserId = user.Id;
                 _context.Add(meet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", meet.UserId);
+            ViewData["UserId"] = meet.UserId;
             return View(meet);
         }
 
@@ -82,7 +93,7 @@ namespace TumbleTracker.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", meet.UserId);
+            ViewData["UserId"] = meet.UserId;
             return View(meet);
         }
 
@@ -98,6 +109,7 @@ namespace TumbleTracker.Controllers
                 return NotFound();
             }
 
+            ModelState.Remove("User");
             if (ModelState.IsValid)
             {
                 try

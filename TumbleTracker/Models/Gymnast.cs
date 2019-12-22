@@ -43,7 +43,7 @@ namespace TumbleTracker.Models
                 if (DOB > today.AddYears(-age))
                 {
 
-                    return age--;
+                    return --age;
                 }
                 return age;
             }
@@ -57,8 +57,9 @@ namespace TumbleTracker.Models
         [Required]
         public ApplicationUser User { get; set; }
 
-
         public List<Media> Medias { get; set; }
+
+        public List<MeetGymnast> MeetGymnasts { get; set; }
 
     }
 }

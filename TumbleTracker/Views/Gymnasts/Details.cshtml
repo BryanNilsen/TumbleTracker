@@ -34,3 +34,15 @@
     <a asp-action="Edit" asp-route-id="@Model.GymnastId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+@if(Model.MeetGymnasts.Count > 0)
+{
+    foreach(var meet in Model.MeetGymnasts)
+    {
+
+    <p>@meet.Meet.EventName</p>
+    <p>Bars: @meet.ScoreBars</p>
+    }
+}
+<div>
+    <a asp-controller="MeetGymnasts" asp-action="Create">Add Scores</a> |
+</div>

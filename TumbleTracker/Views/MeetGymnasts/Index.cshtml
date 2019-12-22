@@ -1,0 +1,83 @@
+﻿@model IEnumerable<TumbleTracker.Models.MeetGymnast>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Group)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScoreBars)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScoreBeam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScoreFloor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScoreVault)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Place)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gymnast)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meet)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScoreBars)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScoreBeam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScoreFloor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScoreVault)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gymnast.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Meet.EventName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MeetGymnastId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MeetGymnastId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MeetGymnastId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

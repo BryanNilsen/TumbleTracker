@@ -32,5 +32,7 @@ namespace TumbleTracker.Models
         [Required]
         public ApplicationUser User { get; set; }
 
+        public List<MeetGymnast> MeetGymnasts { get; set; }
+
     }
 }
