@@ -53,10 +53,11 @@ namespace TumbleTracker.Controllers
                 return NotFound();
             }
 
+            // prevent users from accessing other user data
             var user = await GetCurrentUserAsync();
             if (meetGymnast.Gymnast.UserId != user.Id)
             {
-                //! this should redirect to a "Not Authorized to View this Content" view
+                //? this should redirect to a "Not Authorized to View this Content" view
                 return NotFound();
             }
 
@@ -64,10 +65,15 @@ namespace TumbleTracker.Controllers
         }
 
         // GET: MeetGymnasts/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["GymnastId"] = new SelectList(_context.Gymnasts, "GymnastId", "FirstName");
-            ViewData["MeetId"] = new SelectList(_context.Meets, "MeetId", "EventName");
+            // restrict select lists to user options
+            var user = await GetCurrentUserAsync();
+
+            ViewData["GymnastId"] = new SelectList(_context.Gymnasts.Where(g => g.UserId == user.Id), "GymnastId", "FirstName");
+
+            ViewData["MeetId"] = new SelectList(_context.Meets.Where(g => g.UserId == user.Id), "MeetId", "EventName");
+
             return View();
         }
 

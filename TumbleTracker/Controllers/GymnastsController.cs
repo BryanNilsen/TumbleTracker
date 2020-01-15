@@ -55,6 +55,14 @@ namespace TumbleTracker.Controllers
                 return NotFound();
             }
 
+            // prevent users from accessing other user data
+            var user = await GetCurrentUserAsync();
+            if (gymnast.UserId != user.Id)
+            {
+                //? this should redirect to a "Not Authorized to View this Content" view
+                return NotFound();
+            }
+
             return View(gymnast);
         }
 
