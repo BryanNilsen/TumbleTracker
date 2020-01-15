@@ -4,12 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Your Gymnasts</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @*// info for styling the icon https://google.github.io/material-design-icons/*@
+    <i class="material-icons">add_circle</i>
+    <a asp-action="Create">Create New Gymnast</a>
 </p>
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -25,23 +27,42 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.GymnastId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.GymnastId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GymnastId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.GymnastId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.GymnastId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.GymnastId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
-</table>
+</table>*@
+
+<div class="card-deck">
+    @foreach (var item in Model)
+    {
+    <div class="card">
+        <img class="card-img-top img-fluid" src="~/img/gymnast-avatar.svg" alt="Responsive image">
+        <div class="card-body">
+            <h5 class="card-title"> @Html.DisplayFor(modelItem => item.FullName)</h5>
+            <p class="card-text">Age: @Html.DisplayFor(modelItem => item.Age)</p>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Edit" asp-route-id="@item.GymnastId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.GymnastId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.GymnastId">Delete</a>
+        </div>
+    </div>
+    }
+</div>

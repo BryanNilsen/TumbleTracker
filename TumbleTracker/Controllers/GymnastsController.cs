@@ -47,9 +47,19 @@ namespace TumbleTracker.Controllers
 
             var gymnast = await _context.Gymnasts
                 .Include(g => g.User)
+                .Include(g => g.MeetGymnasts)
+                    .ThenInclude(mg => mg.Meet)
                 .FirstOrDefaultAsync(m => m.GymnastId == id);
             if (gymnast == null)
             {
+                return NotFound();
+            }
+
+            // prevent users from accessing other user data
+            var user = await GetCurrentUserAsync();
+            if (gymnast.UserId != user.Id)
+            {
+                //? this should redirect to a "Not Authorized to View this Content" view
                 return NotFound();
             }
 
@@ -112,7 +122,6 @@ namespace TumbleTracker.Controllers
                 return NotFound();
             }
             ModelState.Remove("User");
-            ModelState.Remove("UserId");
             if (ModelState.IsValid)
             {
                 try
