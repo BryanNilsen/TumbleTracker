@@ -11,3 +11,16 @@
     height: 2.5rem;
     margin-right: .5rem;
 }
+
+.meet_scores_table {
+    border-collapse: separate;
+    border-spacing: 10px 5px;
+}
+.meet_scores_table > tbody > tr + tr {
+    background-color: #adc9e1;
+    color: steelblue;
+}
+
+.meet_scores_table td {
+    padding: 1em;
+}
